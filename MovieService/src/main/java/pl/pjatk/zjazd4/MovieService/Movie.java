@@ -5,6 +5,11 @@ public class Movie {
     private String name;
     private String category;
 
+    public Movie(String name, String category) {
+        this.name = name;
+        this.category = category;
+    }
+
     public Movie(Long id, String name, String category) {
         this.id = id;
         this.name = name;
