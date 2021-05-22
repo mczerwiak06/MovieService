@@ -1,6 +1,10 @@
 package pl.pjatk.zjazd4.MovieService.model;
+import javax.persistence.*;
 
+@Entity
 public class Movie {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String category;

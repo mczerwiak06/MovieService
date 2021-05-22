@@ -2,41 +2,43 @@ package pl.pjatk.zjazd4.MovieService.service;
 
 import org.springframework.stereotype.Service;
 import pl.pjatk.zjazd4.MovieService.model.Movie;
+import pl.pjatk.zjazd4.MovieService.repository.MovieRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MovieService {
 
-    public List<Movie> getAllMovies(){
-        Movie movie1 = new Movie(1L, "Chłopaki nie płaczą", "Komedia");
-        Movie movie2 = new Movie(2L, "Rambo", "Akcja");
-        Movie movie3 = new Movie(3L, "Piątek 13", "Horror");
-        return List.of(movie1, movie2, movie3);
+    private MovieRepository movieRepository;
+
+    public MovieService(MovieRepository movieRepository){
+        this.movieRepository = movieRepository;
     }
 
-    public Movie getMovieById(Long id){
+    public List<Movie> getAllMovies(){
+        return movieRepository.findAll();
+    }
 
-        //return new Movie(1L, "Chłopaki nie płaczą", "Komedia");
-        if (id == 1L)
-            return new Movie(1L, "Chłopaki nie płaczą", "Komedia");
+    public Optional getMovieById(Long id){
 
-        else if (id == 2L)
-            return  new Movie(2L, "Rambo", "Akcja");
-
-        else
-            return  new Movie(3L, "Piątek 13", "Horror");
+        return movieRepository.findById(id);
     }
 
     public Movie addMovie(Movie movie) {
-        return movie;
+        return movieRepository.save(movie);
     }
 
-    public void updateMovieById(Long id){
-        System.out.println("Edytowano film");
+    public Movie updateMovieById(Movie movie){
+        Optional<Movie> byId = movieRepository.findById(movie.getId());
+        if (byId.isEmpty()) {
+            throw new RuntimeException();
+        } else {
+            return movieRepository.save(movie);
+        }
     }
 
     public void deleteById(Long id){
-        System.out.println("Film został prawidłowo usunięty");
+        movieRepository.deleteById(id);
     }
 }

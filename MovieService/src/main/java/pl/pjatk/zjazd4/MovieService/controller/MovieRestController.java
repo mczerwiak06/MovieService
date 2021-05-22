@@ -1,11 +1,10 @@
 package pl.pjatk.zjazd4.MovieService.controller;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.pjatk.zjazd4.MovieService.service.MovieService;
 import pl.pjatk.zjazd4.MovieService.model.Movie;
-
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/movies")
@@ -23,7 +22,12 @@ public class MovieRestController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Movie> findById(@PathVariable Long id){
-        return ResponseEntity.ok(movieService.getMovieById(id));
+        Optional<Movie> optionalMovie = movieService.getMovieById(id);
+        if (optionalMovie.isPresent()) {
+            return ResponseEntity.ok(optionalMovie.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping
@@ -32,9 +36,8 @@ public class MovieRestController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Movie> updateMovie(@RequestBody Movie movie, @PathVariable Long id) {
-        movieService.updateMovieById(id);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Movie> updateMovie(@RequestBody Movie movie) {
+        return ResponseEntity.ok(movieService.updateMovieById(movie));
     }
 
     @DeleteMapping("/{id}")
