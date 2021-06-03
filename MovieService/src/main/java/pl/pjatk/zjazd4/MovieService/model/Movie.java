@@ -7,14 +7,31 @@ public class Movie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private String category;
+    @Enumerated(EnumType.STRING)
+    private Category category;
+    private byte isAvailable;
 
-    public Movie(String name, String category) {
+    public byte getAvailable() {
+        return isAvailable;
+    }
+
+    public void setAvailable(byte available) {
+        isAvailable = available;
+    }
+
+    public Movie(Long id, String name, Category category, byte isAvailable) {
+        this.id = id;
+        this.name = name;
+        this.category = category;
+        this.isAvailable = isAvailable;
+    }
+
+    public Movie(String name, Category category) {
         this.name = name;
         this.category = category;
     }
 
-    public Movie(Long id, String name, String category) {
+    public Movie(Long id, String name, Category category) {
         this.id = id;
         this.name = name;
         this.category = category;
@@ -39,11 +56,11 @@ public class Movie {
         this.name = name;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 }

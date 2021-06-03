@@ -16,7 +16,7 @@ public class MovieRestController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Movie>> getMovie(){
+    public ResponseEntity<List<Movie>> getAllMovies(){
         return ResponseEntity.ok(movieService.getAllMovies());
     }
 
@@ -44,5 +44,16 @@ public class MovieRestController {
     public ResponseEntity<Void> deletyById(@PathVariable Long id){
         movieService.deleteById(id);
         return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/available/{id}")
+    public ResponseEntity<Movie> changeAvailable(@PathVariable Long id){
+        Optional<Movie> optionalMovie = movieService.getMovieById(id);
+        if (optionalMovie.isPresent()) {
+            movieService.changeAvailable(id);
+            return ResponseEntity.ok(optionalMovie.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
