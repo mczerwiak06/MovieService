@@ -1,5 +1,6 @@
 package pl.pjatk.zjazd4.MovieService.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import pl.pjatk.zjazd4.MovieService.model.Movie;
 
@@ -8,7 +9,7 @@ import java.util.Optional;
 
 public interface MovieRepository extends JpaRepository<Movie, Long> {
 
-    @Override
+    /*@Override
     @Query("select m from Movie m")
     List<Movie> findAll();
 
@@ -22,5 +23,6 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
 
     @Override
     @Query("delete from Movie m where m.id = ?1")
-    void deleteById(Long aLong);
+    void deleteById(Long aLong);*/
+
 }

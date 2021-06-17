@@ -49,4 +49,12 @@ public class MovieService {
             }
             return movieRepository.save(movieToChange);
     }
+
+    public Movie changeAvailableToFalse(Long id){
+        Movie movieToChange = getMovieById(id).get();
+        if (movieToChange.getAvailable() == (byte)1){
+            movieToChange.setAvailable((byte)0);
+        }
+        return movieRepository.save(movieToChange);
+    }
 }

@@ -56,4 +56,15 @@ public class MovieRestController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @PutMapping("/unavailable/{id}")
+    public ResponseEntity<Movie> changeAvailableToFalse(@PathVariable Long id){
+        Optional<Movie> optionalMovie = movieService.getMovieById(id);
+        if (optionalMovie.isPresent()) {
+            movieService.changeAvailableToFalse(id);
+            return ResponseEntity.ok(optionalMovie.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }
